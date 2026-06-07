@@ -7,7 +7,7 @@
 ## Instalace
 Pro instalaci stačí přidat integraci do Home Assistant HACS prostřednictvím tlačítka níže. Poté stačí v HACS vyhledat "Bakaláři", nainstalovat integraci a restartovat Home Assistant.
 
-[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=Mtn16&repository=HA-Bakalari&category=integration)
+[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=mtn16&repository=ha-bakalari&category=integration)
 
 ## Přidání rozvrhu
 Pro přidání samotného rozvrhu otevřete sekci integrací, vyhledejte "Bakaláři" a vyplňte potřebné informace.
