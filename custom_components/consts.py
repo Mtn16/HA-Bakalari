@@ -1,0 +1,6 @@
+DOMAIN = "bakalari"
+
+CONF_URL = "url"
+CONF_NAME = "name"
+
+DEFAULT_SCAN_INTERVAL = 300

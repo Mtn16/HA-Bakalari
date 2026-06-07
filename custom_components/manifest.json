@@ -1,0 +1,11 @@
+{
+    "domain": "bakalari",
+    "name": "Bakalari",
+    "version": "1.0.0",
+    "documentation": "https://github.com/Mtn16/HA-Bakalari",
+    "requirements": [
+        "beautifulsoup4>=4.12.0"
+    ],
+    "codeowners": ["@Mtn16"],
+    "config_flow": true
+}
