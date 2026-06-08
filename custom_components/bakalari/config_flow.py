@@ -2,7 +2,12 @@ import voluptuous as vol
 
 from homeassistant import config_entries
 
-from .const import DOMAIN, CONF_NAME, CONF_URL
+from .const import (
+    DOMAIN,
+    CONF_NAME,
+    CONF_URL,
+    CONF_IGNORED_GROUPS
+)
 
 
 class BakalariConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
@@ -19,7 +24,11 @@ class BakalariConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
         schema = vol.Schema({
             vol.Required(CONF_NAME): str,
-            vol.Required(CONF_URL): str
+            vol.Required(CONF_URL): str,
+            vol.Optional(
+                CONF_IGNORED_GROUPS,
+                default=""
+            ): str
         })
 
         return self.async_show_form(

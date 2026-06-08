@@ -5,8 +5,25 @@ from bs4 import BeautifulSoup
 
 class BakalariApi:
 
-    def __init__(self, url):
+    def __init__(self, url, ignored_groups=""):
         self.url = url
+
+        self.ignored_groups = {
+            group.strip().lower()
+            for group in ignored_groups.split(",")
+            if group.strip()
+        }
+
+    def should_ignore_group(self, group):
+        if not group:
+            return False
+
+        group = group.lower()
+
+        return any(
+            group.startswith(ignored)
+            for ignored in self.ignored_groups
+        )
 
     def fetch_timetable(self):
         headers = {
@@ -19,10 +36,18 @@ class BakalariApi:
             )
         }
 
-        response = requests.get(self.url, headers=headers, timeout=15)
+        response = requests.get(
+            self.url,
+            headers=headers,
+            timeout=15
+        )
+
         response.encoding = "utf-8"
 
-        soup = BeautifulSoup(response.text, "html.parser")
+        soup = BeautifulSoup(
+            response.text,
+            "html.parser"
+        )
 
         timetable = {}
 
@@ -55,25 +80,43 @@ class BakalariApi:
                         raw_data = item.get("data-detail")
                         data = json.loads(raw_data)
 
+                        group = data.get(
+                            "group",
+                            "Celá třída"
+                        )
+
+                        if self.should_ignore_group(group):
+                            continue
+
                         lesson_info = {
-                            "predmet": data.get("subjecttext", "???"),
-                            "ucitel": data.get("teacher", ""),
-                            "mistnost": data.get("room", ""),
-                            "skupina": data.get(
-                                "group",
-                                "Celá třída"
+                            "predmet": data.get(
+                                "subjecttext",
+                                "???"
                             ),
+                            "ucitel": data.get(
+                                "teacher",
+                                ""
+                            ),
+                            "mistnost": data.get(
+                                "room",
+                                ""
+                            ),
+                            "skupina": group,
                             "cyklus": data.get(
                                 "cycle",
                                 "Každý týden"
                             )
                         }
 
-                        hour_lessons.append(lesson_info)
+                        hour_lessons.append(
+                            lesson_info
+                        )
 
                     except Exception:
                         continue
 
-                timetable[day_name].append(hour_lessons)
+                timetable[day_name].append(
+                    hour_lessons
+                )
 
         return timetable
